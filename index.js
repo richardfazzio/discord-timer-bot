@@ -25,7 +25,6 @@ const COMMAND = /^!\w+/;
 	await client.login(process.env.TOKEN);
 
 	client.on('messageCreate', (msg) => {
-		console.log(JSON.stringify(msg));
 		try {
 			if (
 				!msg.content.match(COMMAND) ||

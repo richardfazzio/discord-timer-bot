@@ -5,8 +5,8 @@ export const MESSAGE_TEXT = {
 	TIMER_CLEARED: 'Countdown ended.',
 	TIMER_NOT_FOUND: 'Oops, no countdown was found for you.',
 	TIMER_ENDED: 'The countdown has ended.',
-	TIMER_MINUTE_REMAINING: 'There is 1 minute ramining in the countdown',
-	TIMER_MINUTES_REMAINING: 'There are %t minutes ramining in the countdown',
+	TIMER_MINUTE_REMAINING: 'There is 1 minute remaining in the countdown.',
+	TIMER_MINUTES_REMAINING: 'There are %t minutes remaining in the countdown.',
 	NUMBER_REQUIRED:
 		'A number is required as one of the parameters for this command.',
 	TIMER_TOO_LARGE:

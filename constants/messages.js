@@ -1,5 +1,5 @@
 export const MESSAGE_TEXT = {
-	HELP_DESCRIPTION: `This bot is used for counting down durations, in minutes, up until one hour.\nOnly one countdown can be triggered by a user at a time.\nTo begin the timer you can type !countdown followed by the number of minutes you wish the countdown to last, up until one hour.\nExample: *!countdown 35* to have the duration set for 35 minutes.\nThe clock will countdown and post a message every minute until the duration has ended.\n.To end the countdown early you can type *!stop*.`,
+	HELP_DESCRIPTION: `This bot is used for counting down durations, in minutes, up until one hour.\nOnly one countdown can be triggered by a user at a time.\nTo begin the timer you can type !countdown followed by the number of minutes you wish the countdown to last, up until one hour.\nExample: _**!countdown 35**_ to have the duration set for 35 minutes.\nThe clock will countdown and post a message every minute until the duration has ended.\nTo end the countdown early you can type _**!stop**_.`,
 	NO_COMMAND_FOUND: 'That command is not supported current :(',
 	UNKNOWN_ERROR: 'Oops! Unknowned error occurred sorry.',
 	TIMER_STARTED: 'Countdown begun with %t minutes left.',

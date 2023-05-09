@@ -8,7 +8,7 @@ const timers = new Map(); // Ongoing timers in memory
 const ACTIONS_REGEX = {
 	START_TIMER: /^!countdown\s\d*$/,
 	STOP_TIMER: /^!stop$/,
-	HELP: /^help$/
+	HELP: /^!help$/
 };
 
 const REGEX = {

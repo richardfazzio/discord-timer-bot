@@ -8,6 +8,7 @@ const timers = new Map(); // Ongoing timers in memory
 const ACTIONS_REGEX = {
 	START_TIMER: /^!countdown\s\d*$/,
 	STOP_TIMER: /^!stop$/,
+	HELP: /^help$/
 };
 
 const REGEX = {
@@ -17,10 +18,12 @@ const REGEX = {
 const MAX_TIMER = 60; // Time in minutes
 
 export function handleResponse(msg) {
+	if (msg.content.match(ACTIONS_REGEX.HELP)) {
+		return MESSAGE_TEXT.HELP_DESCRIPTION
+	}
 	if (msg.content.match(ACTIONS_REGEX.START_TIMER)) {
 		return handleStartTimer(msg);
 	}
-
 	if (msg.content.match(ACTIONS_REGEX.STOP_TIMER)) {
 		return handleStopTimer(msg);
 	}

@@ -18,6 +18,8 @@ const REGEX = {
 const MAX_TIMER = 60; // Time in minutes
 
 export function handleResponse(msg) {
+	console.log(msg.content)
+	console.log('MATCH', msg.content.match(ACTIONS_REGEX.HELP))
 	if (msg.content.match(ACTIONS_REGEX.HELP)) {
 		return MESSAGE_TEXT.HELP_DESCRIPTION
 	}

@@ -33,6 +33,7 @@ const COMMAND = /^!\w+/;
 				return;
 			}
 			const response = handleResponse(msg);
+			console.log('RESPONSE', response)
 			if (!response) {
 				return;
 			}

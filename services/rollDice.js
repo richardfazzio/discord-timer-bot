@@ -1,4 +1,4 @@
-import { MESSAGE_TEXT } from '../constants/messages'
+import { MESSAGE_TEXT } from '../constants/messages.js'
 
 const DEFAULT_DICE = 20
 const ROLL_REPLACE_TEXT = '%roll!'

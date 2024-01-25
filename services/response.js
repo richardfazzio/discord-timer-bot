@@ -1,4 +1,5 @@
 import { MESSAGE_TEXT } from '../constants/messages.js';
+import { handleRoll } from './rollDice.js'
 
 const timers = new Map(); // Ongoing timers in memory
 // Takes in string msg and returns a response
@@ -6,9 +7,10 @@ const timers = new Map(); // Ongoing timers in memory
 //https://discord.com/api/oauth2/authorize?client_id=1091817482697850959&permissions=68608&scope=bot
 
 const ACTIONS_REGEX = {
-	START_TIMER: /^!countdown\s\d*$/,
-	STOP_TIMER: /^!stop$/,
-	HELP: /^!help$/
+	START_TIMER: /^!countdown\s\d*$/i,
+	STOP_TIMER: /^!stop$/i,
+	ROLL: /^!roll( \d+| \d+d\d+){0,1}$/i,
+	HELP: /^!help$/i
 };
 
 const REGEX = {
@@ -17,10 +19,18 @@ const REGEX = {
 
 const MAX_TIMER = 60; // Time in minutes
 
+const HELP_MESSAGES = [
+	MESSAGE_TEXT.HELP_DESCRIPTION,
+	MESSAGE_TEXT.ROLL_DESCRIPTION
+]
+
 export function handleResponse(msg) {
 	if (msg.content.match(ACTIONS_REGEX.HELP)) {
-		return MESSAGE_TEXT.HELP_DESCRIPTION
+		return HELP_MESSAGES.reduce((acc, val) => acc += val, '')
 	}
+	if (msg.content.match(ACTIONS_REGEX.ROLL)) {
+		return handleRoll(msg)
+	} 
 	if (msg.content.match(ACTIONS_REGEX.START_TIMER)) {
 		return handleStartTimer(msg);
 	}
@@ -117,3 +127,5 @@ function convertSecondsToMS(seconds) {
 // function defaultResponse() {
 // 	return MESSAGE_TEXT.NO_COMMAND_FOUND;
 // }
+
+

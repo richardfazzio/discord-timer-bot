@@ -1,21 +1,13 @@
 import { MESSAGE_TEXT } from '../constants/messages.js';
+import { ACTIONS_REGEX, WHITE_SPACE } from '../constants/regex.js';
+import { handleCombatInitiative } from './combatInitiative.js';
+import { replyToMessage, sendMessageByChannelId } from './discordClient.js';
 import { handleRoll } from './rollDice.js';
 
 const timers = new Map(); // Ongoing timers in memory
 // Takes in string msg and returns a response
 
 //https://discord.com/api/oauth2/authorize?client_id=1091817482697850959&permissions=68608&scope=bot
-
-const ACTIONS_REGEX = {
-    START_TIMER: /^!countdown\s\d*$/i,
-    STOP_TIMER: /^!stop$/i,
-    ROLL: /^!roll( \d+| \d+d\d+){0,1}$/i,
-    HELP: /^!help$/i,
-};
-
-const REGEX = {
-    WHITE_SPACE: /\s+/,
-};
 
 const MAX_TIMER = 60; // Time in minutes
 
@@ -31,6 +23,9 @@ export function handleResponse(msg) {
     if (msg.content.match(ACTIONS_REGEX.ROLL)) {
         return handleRoll(msg);
     }
+    if (msg.content.match(ACTIONS_REGEX.COMBAT_INITIATIVE)) {
+        return handleCombatInitiative(msg);
+    }
     if (msg.content.match(ACTIONS_REGEX.START_TIMER)) {
         return handleStartTimer(msg);
     }
@@ -40,8 +35,8 @@ export function handleResponse(msg) {
 }
 
 function handleStartTimer(msg) {
-    const { content, author } = msg;
-    const [_, minutesString] = content.split(REGEX.WHITE_SPACE);
+    const { content, author, channelId } = msg;
+    const [_, minutesString] = content.split(WHITE_SPACE);
     const minutes = +minutesString;
     const userId = author.id;
     const timer = timers.get(userId);
@@ -67,7 +62,10 @@ function handleStartTimer(msg) {
         msg,
         remainingCount: minutes,
     });
-    msg.reply(MESSAGE_TEXT.TIMER_STARTED.replace('%t', minutes));
+    sendMessageByChannelId(
+        channelId,
+        MESSAGE_TEXT.TIMER_STARTED.replace('%t', minutes)
+    );
 }
 
 function handleTimer(userId) {
@@ -81,7 +79,7 @@ function handleTimer(userId) {
     if (remainingCount < 1) {
         clearInterval(intervalId);
         timers.delete(userId);
-        msg.reply(MESSAGE_TEXT.TIMER_ENDED);
+        sendMessageByChannelId(msg.channelId, MESSAGE_TEXT.TIMER_ENDED);
         return;
     }
     const reply =
@@ -92,7 +90,7 @@ function handleTimer(userId) {
         ...timer,
         remainingCount,
     });
-    msg.reply(reply);
+    sendMessageByChannelId(msg.channelId, reply);
 }
 
 function handleStopTimer(msg) {
@@ -104,12 +102,8 @@ function handleStopTimer(msg) {
     }
     clearInterval(timer.intervalId);
     timers.delete(userId);
-    msg.reply(MESSAGE_TEXT.TIMER_ENDED);
+    replyToMessage(msg, MESSAGE_TEXT.TIMER_ENDED);
 }
-
-// function getEndTimeInMS(createdTimestamp, timerMinutes) {
-// 	return createdTimestamp + convertMinutesToMS(timerMinutes);
-// }
 
 function convertMinutesToMS(minutes) {
     const seconds = minutes * 60;
@@ -119,11 +113,3 @@ function convertMinutesToMS(minutes) {
 function convertSecondsToMS(seconds) {
     return seconds * 1000;
 }
-
-// function convertMSToMinutes(ms) {
-// 	return Math.floor(ms / 60 / 1000);
-// }
-
-// function defaultResponse() {
-// 	return MESSAGE_TEXT.NO_COMMAND_FOUND;
-// }

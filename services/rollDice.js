@@ -1,17 +1,17 @@
 import { MESSAGE_TEXT } from '../constants/messages.js';
+import {
+    DEFAULT_ROLL,
+    ROLL_REMOVE,
+    N_ROLL,
+    D_ROLL,
+} from '../constants/regex.js';
 
 const DEFAULT_DICE = 20;
 const ROLL_REPLACE_TEXT = '%roll!';
 
-const DEFAULT_ROLL = /^!roll\s*$/i;
-const ROLL_REMOVE = /^!roll\s*/i;
-const N_ROLL = /^!roll\s*\d+$/i;
-const D_ROLL = /^!roll\s+\d+d\d+$/i;
-
 export function handleRoll(msg) {
     try {
         const { content } = msg;
-        console.log(content, msg);
         if (content.match(DEFAULT_ROLL)) {
             return createResponseText(rollDice());
         }
@@ -25,8 +25,8 @@ export function handleRoll(msg) {
             return createResponseText(rollDiceNTimes(+numberOfDice, +diceSize));
         }
         throw new Error('Unknown dice roll commant');
-    } catch (error) { 
-        console.error('Failed to handle roll',   {
+    } catch (error) {
+        console.error('Failed to handle roll', {
             content: msg.content,
             error: JSON.stringify(error),
             message: 'Failed to roll dice',
@@ -34,6 +34,10 @@ export function handleRoll(msg) {
         });
         return MESSAGE_TEXT.UNKNOWN_ERROR;
     }
+}
+
+export function rollDice(n = DEFAULT_DICE) {
+    return Math.ceil(Math.random() * n);
 }
 
 function removeRollText(content) {
@@ -46,10 +50,6 @@ function rollDiceNTimes(numberOfDice, diceSize) {
         sum += rollDice(diceSize);
     }
     return sum;
-}
-
-function rollDice(n = DEFAULT_DICE) {
-    return Math.ceil(Math.random() * n);
 }
 
 function createResponseText(n) {

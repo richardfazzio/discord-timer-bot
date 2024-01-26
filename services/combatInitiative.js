@@ -24,7 +24,10 @@ export function handleCombatInitiative(msg) {
         handleCombatRound(msg);
         return;
     }
-    replyToMessage(msg, 'Command does not match anything for !combat sorry!');
+    replyToMessage(
+        msg,
+        'Command does not match anything for **!combat** sorry!'
+    );
 }
 
 function handleCombatRound(msg) {
@@ -75,7 +78,7 @@ function handleStartCombat(msg) {
             return { playerName, initiative: +bonus * isPos };
         });
         combatTracker[author.id] = initiatives;
-        replyToMessage(msg, 'Initiatives Set' + JSON.stringify(initiatives));
+        replyToMessage(msg, 'Initiatives Set');
     } catch (error) {
         console.error(error);
         replyToMessage(msg, MESSAGE_TEXT.UNKNOWN_ERROR);

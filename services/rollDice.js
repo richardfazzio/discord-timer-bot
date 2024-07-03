@@ -68,7 +68,7 @@ function rollDiceNTimes(numberOfDice, diceSize) {
 function rollCharacter() {
     const characterResults = [];
     for (let i = 0; i < 6; i++) {
-        characterResults.push(rollDiceNTimes(3, 6));
+        characterResults.push(rollDiceNTimes(3, 6).rollResultsStr);
     }
     return characterResults.join(',');
 }

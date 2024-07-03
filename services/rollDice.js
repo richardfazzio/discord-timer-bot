@@ -22,7 +22,9 @@ export function handleRoll(msg) {
         if (content.match(D_ROLL)) {
             const dString = removeRollText(content);
             const [numberOfDice, diceSize] = dString.split(/d/i);
-            return createResponseText(rollDiceNTimes(+numberOfDice, +diceSize));
+            return createResponseText(
+                rollDiceNTimes(+numberOfDice, +diceSize).rollResultsStr
+            );
         }
         throw new Error('Unknown dice roll commant');
     } catch (error) {

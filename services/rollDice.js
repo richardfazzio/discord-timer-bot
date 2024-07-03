@@ -46,15 +46,25 @@ function removeRollText(content) {
 
 function rollDiceNTimes(numberOfDice, diceSize) {
     let sum = 0;
+    const rollResults = [];
     for (let i = 0; i < numberOfDice; i++) {
+        const rollResult = rollDice(diceSize);
+        rollResults.push(rollResult);
         sum += rollDice(diceSize);
     }
-    return sum;
+    const rollResultsStr =
+        rollResults.length === 1
+            ? `(${sum})`
+            : `${sum}(${rollResults.join('+')})`;
+    return { sum, rollResultsStr };
 }
 
-function createResponseText(n) {
-    if (n !== 1) {
-        return MESSAGE_TEXT.ROLL_RESPONSE.replace(ROLL_REPLACE_TEXT, n);
+function createResponseText(result) {
+    if (typeof result === 'string') {
+        return MESSAGE_TEXT.ROLL_RESPONSE.replace(ROLL_REPLACE_TEXT, result);
     }
-    return `Oof! ${MESSAGE_TEXT.ROLL_RESPONSE.replace(ROLL_REPLACE_TEXT, n)}`;
+    if (result !== 1) {
+        return MESSAGE_TEXT.ROLL_RESPONSE.replace(ROLL_REPLACE_TEXT, result);
+    }
+    return `Oof! ${MESSAGE_TEXT.ROLL_RESPONSE.replace(ROLL_REPLACE_TEXT, result)}`;
 }

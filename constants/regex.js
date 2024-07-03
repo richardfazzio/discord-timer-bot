@@ -3,6 +3,7 @@ export const DEFAULT_ROLL = /^!roll\s*$/i;
 export const ROLL_REMOVE = /^!roll\s*/i;
 export const N_ROLL = /^!roll\s*\d+$/i;
 export const D_ROLL = /^!roll\s+\d+d\d+$/i;
+export const CHARACTER_ROLL = /^!roll\s+character$/i;
 
 // Actions to be handled
 export const ACTIONS_REGEX = {

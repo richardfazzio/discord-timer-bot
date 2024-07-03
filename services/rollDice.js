@@ -4,6 +4,7 @@ import {
     ROLL_REMOVE,
     N_ROLL,
     D_ROLL,
+    CHARACTER_ROLL,
 } from '../constants/regex.js';
 
 const DEFAULT_DICE = 20;
@@ -25,6 +26,9 @@ export function handleRoll(msg) {
             return createResponseText(
                 rollDiceNTimes(+numberOfDice, +diceSize).rollResultsStr
             );
+        }
+        if (content.match(CHARACTER_ROLL)) {
+            return createResponseText(rollCharacter());
         }
         throw new Error('Unknown dice roll commant');
     } catch (error) {
@@ -59,6 +63,14 @@ function rollDiceNTimes(numberOfDice, diceSize) {
             ? `(${sum})`
             : `${sum}(${rollResults.join('+')})`;
     return { sum, rollResultsStr };
+}
+
+function rollCharacter() {
+    const characterResults = [];
+    for (const i = 0; i < 6; i++) {
+        characterResults.push(rollDiceNTimes(3, 6));
+    }
+    return characterResults.join(',');
 }
 
 function createResponseText(result) {

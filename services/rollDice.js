@@ -52,7 +52,7 @@ function rollDiceNTimes(numberOfDice, diceSize) {
     for (let i = 0; i < numberOfDice; i++) {
         const rollResult = rollDice(diceSize);
         rollResults.push(rollResult);
-        sum += rollDice(diceSize);
+        sum += rollDice(rollResult);
     }
     const rollResultsStr =
         rollResults.length === 1

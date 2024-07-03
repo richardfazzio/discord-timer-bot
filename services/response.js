@@ -20,7 +20,10 @@ export function handleResponse(msg) {
     if (msg.content.match(ACTIONS_REGEX.HELP)) {
         return HELP_MESSAGES.reduce((acc, val) => (acc += val), '');
     }
-    if (msg.content.match(ACTIONS_REGEX.ROLL)) {
+    if (
+        msg.content.match(ACTIONS_REGEX.ROLL) ||
+        msg.content.match(ACTIONS_REGEX.ROLL_CHARACTER)
+    ) {
         return handleRoll(msg);
     }
     if (msg.content.match(ACTIONS_REGEX.COMBAT_INITIATIVE)) {

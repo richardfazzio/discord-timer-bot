@@ -11,6 +11,7 @@ export const ACTIONS_REGEX = {
     STOP_TIMER: /^!stop$/i,
     COMBAT_INITIATIVE: /^!combat\s+.*/i,
     ROLL: /^!roll( \d+| \d+d\d+){0,1}$/i,
+    ROLL_CHARACTER: /^!roll character$/i,
     HELP: /^!help$/i,
 };
 
